@@ -12,6 +12,7 @@ class GerenciadorArquivos(FileSystemEventHandler):
             src = pasta_inicio + "/" + arquivo
             destino = pasta_destino + "/" + arquivo
             os.rename(src, destino)
+            print(f"Arquivo {arquivo} movido com sucesso!")
 
 
 pasta_inicio = "C:/Users/Administrador/Desktop/Teste"
@@ -22,8 +23,8 @@ observador.schedule(evento_gerenciamento, pasta_inicio, recursive=True)
 observador.start()
 
 try:
+    print("Rodando....")
     while True:
-        print("Rodando....")
         time.sleep(10)
 except KeyboardInterrupt:
     print("Processo Encerrado...")
