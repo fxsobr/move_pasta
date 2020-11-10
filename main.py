@@ -1,16 +1,33 @@
-# This is a sample Python script.
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import os
+import json
+import time
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class GerenciadorArquivos(FileSystemEventHandler):
+    def on_modified(self, event):
+        for arquivo in os.listdir(pasta_inicio):
+            src = pasta_inicio + "/" + arquivo
+            destino = pasta_destino + "/" + arquivo
+            os.rename(src, destino)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+pasta_inicio = "C:/Users/Administrador/Desktop/Teste"
+pasta_destino = "C:/Users/Administrador/Documents/teste1"
+evento_gerenciamento = GerenciadorArquivos()
+observador = Observer()
+observador.schedule(evento_gerenciamento, pasta_inicio, recursive=True)
+observador.start()
+
+try:
+    while True:
+        print("Rodando....")
+        time.sleep(10)
+except KeyboardInterrupt:
+    print("Processo Encerrado...")
+    observador.stop()
+observador.join()
+
+
